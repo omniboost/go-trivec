@@ -51,7 +51,7 @@ func (p PaymodeGroupsRequestQueryParams) ToURLValues() (url.Values, error) {
 	return params, nil
 }
 
-func (r *PaymodeGroupsRequest) QueryParams() QueryParams {
+func (r *PaymodeGroupsRequest) QueryParams() *PaymodeGroupsRequestQueryParams {
 	return r.queryParams
 }
 

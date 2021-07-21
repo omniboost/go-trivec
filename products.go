@@ -51,7 +51,7 @@ func (p ProductsRequestQueryParams) ToURLValues() (url.Values, error) {
 	return params, nil
 }
 
-func (r *ProductsRequest) QueryParams() QueryParams {
+func (r *ProductsRequest) QueryParams() *ProductsRequestQueryParams {
 	return r.queryParams
 }
 

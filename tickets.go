@@ -35,6 +35,9 @@ func (r TicketsRequest) NewQueryParams() *TicketsRequestQueryParams {
 }
 
 type TicketsRequestQueryParams struct {
+	IncOpen     bool `schema:"incOpen"`
+	IncInternal bool `schema:"incInternal"`
+	IncTraining bool `schema:"incTraining"`
 }
 
 func (p TicketsRequestQueryParams) ToURLValues() (url.Values, error) {
@@ -51,7 +54,7 @@ func (p TicketsRequestQueryParams) ToURLValues() (url.Values, error) {
 	return params, nil
 }
 
-func (r *TicketsRequest) QueryParams() QueryParams {
+func (r *TicketsRequest) QueryParams() *TicketsRequestQueryParams {
 	return r.queryParams
 }
 
