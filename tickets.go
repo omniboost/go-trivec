@@ -110,7 +110,7 @@ func (r *TicketsRequest) NewResponseBody() *TicketsRequestResponseBody {
 type TicketsRequestResponseBody Tickets
 
 func (r *TicketsRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("export/tickets/day/{{.date}}", r.PathParams())
+	u := r.client.GetEndpointURL("Ticket/Day.json/{{.date}}", r.PathParams())
 	return &u
 }
 

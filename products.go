@@ -107,7 +107,7 @@ func (r *ProductsRequest) NewResponseBody() *ProductsRequestResponseBody {
 type ProductsRequestResponseBody Products
 
 func (r *ProductsRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("export/products", r.PathParams())
+	u := r.client.GetEndpointURL("Catalog/productlist.json", r.PathParams())
 	return &u
 }
 

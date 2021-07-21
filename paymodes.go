@@ -106,7 +106,7 @@ func (r *PaymodesRequest) NewResponseBody() *PaymodesRequestResponseBody {
 type PaymodesRequestResponseBody Paymodes
 
 func (r *PaymodesRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("export/paymodes", r.PathParams())
+	u := r.client.GetEndpointURL("Catalog/paymodelist.json", r.PathParams())
 	return &u
 }
 

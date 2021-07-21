@@ -17,10 +17,12 @@ func TestMain(m *testing.M) {
 	baseURLString := os.Getenv("BASE_URL")
 	subscriptionKey := os.Getenv("SUBSCRIPTION_KEY")
 	serviceKey := os.Getenv("SERVICE_KEY")
+	serviceID := os.Getenv("SERVICE_ID")
+	appID := os.Getenv("APP_ID")
 	environment := os.Getenv("ENVIRONMENT")
 	debug := os.Getenv("DEBUG")
 
-	client = trivec.NewClient(nil, subscriptionKey, serviceKey)
+	client = trivec.NewClient(nil, subscriptionKey, serviceKey, serviceID, appID)
 	if debug != "" {
 		client.SetDebug(true)
 	}

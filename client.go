@@ -30,13 +30,13 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "api.mytrivec.com",
+		Host:   "{{.service_id}}.trivecgateway.com",
 		Path:   "",
 	}
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, subscriptionKey, serviceKey string) *Client {
+func NewClient(httpClient *http.Client, subscriptionKey, serviceKey, serviceID, appID string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -46,6 +46,8 @@ func NewClient(httpClient *http.Client, subscriptionKey, serviceKey string) *Cli
 	client.SetHTTPClient(httpClient)
 	client.SetSubscriptionKey(subscriptionKey)
 	client.SetServiceKey(serviceKey)
+	client.SetServiceID(serviceID)
+	client.SetAppID(appID)
 	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
@@ -67,6 +69,8 @@ type Client struct {
 	// credentials
 	subscriptionKey string
 	serviceKey      string
+	serviceID       string
+	appID           string
 	environment     string
 
 	// User agent for client
@@ -112,6 +116,22 @@ func (c Client) ServiceKey() string {
 
 func (c *Client) SetServiceKey(serviceKey string) {
 	c.serviceKey = serviceKey
+}
+
+func (c Client) ServiceID() string {
+	return c.serviceID
+}
+
+func (c *Client) SetServiceID(serviceID string) {
+	c.serviceID = serviceID
+}
+
+func (c Client) AppID() string {
+	return c.appID
+}
+
+func (c *Client) SetAppID(appID string) {
+	c.appID = appID
 }
 
 func (c Client) Environment() string {
@@ -164,12 +184,14 @@ func (c *Client) SetBeforeRequestDo(fun BeforeRequestDoCallback) {
 
 func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
 	clientURL := c.BaseURL()
+	clientURL.Host = strings.Replace(clientURL.Host, "{{.service_id}}", c.ServiceID(), -1)
 
 	parsed, err := url.Parse(p)
 	if err != nil {
 		log.Fatal(err)
 	}
 	q := clientURL.Query()
+	q.Add("appid", c.AppID())
 	for k, vv := range parsed.Query() {
 		for _, v := range vv {
 			q.Add(k, v)
@@ -186,7 +208,7 @@ func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
 
 	buf := new(bytes.Buffer)
 	params := pathParams.Params()
-	// params["administration_id"] = c.Administration()
+	// params["app_id"] = c.AppID()
 	err = tmpl.Execute(buf, params)
 	if err != nil {
 		log.Fatal(err)
