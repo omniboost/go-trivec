@@ -6,13 +6,13 @@ type Tickets []Ticket
 
 type Ticket struct {
 	Type          string  `json:"$type"`
-	ActualDate    int     `json:"ActualDate"`
+	ActualDate    Date    `json:"ActualDate"`
 	CenterKey     string  `json:"CenterKey"`
 	CenterLeftNr  int     `json:"CenterLeftNr"`
 	CenterName    string  `json:"CenterName"`
 	CenterNr      string  `json:"CenterNr"`
 	CenterRightNr int     `json:"CenterRightNr"`
-	Date          int     `json:"Date,omitempty"`
+	Date          Date    `json:"Date,omitempty"`
 	Key           string  `json:"Key"`
 	Orders        Orders  `json:"Orders"`
 	PcName        string  `json:"PcName"`
@@ -36,8 +36,8 @@ type Orders []Order
 type Order struct {
 	Type       string     `json:"$type"`
 	ActionID   int        `json:"ActionId"`
-	ActualDate int        `json:"ActualDate"`
-	Date       int        `json:"Date"`
+	ActualDate Date       `json:"ActualDate"`
+	Date       Date       `json:"Date"`
 	Key        string     `json:"Key"`
 	Lines      OrderLines `json:"Lines"`
 	Paymodes   Paymodes   `json:"Paymodes"`
@@ -270,7 +270,7 @@ type DxVATs []DxVAT
 type DxVAT struct {
 	Type        string  `json:"$type"`
 	CountryCode string  `json:"CountryCode"`
-	FromDate    float64 `json:"FromDate"`
+	FromDate    Date    `json:"FromDate"`
 	Key         string  `json:"Key"`
 	VAT         float64 `json:"VAT"`
 }
