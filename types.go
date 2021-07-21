@@ -5,89 +5,76 @@ import "time"
 type Tickets []Ticket
 
 type Ticket struct {
-	AccountClientNr    string             `json:"accountClientNr"`
-	AccountName        string             `json:"accountName"`
-	TotalPrice         float64            `json:"totalPrice"`
-	TotalQuantity      float64            `json:"totalQuantity"`
-	TotalToPay         float64            `json:"totalToPay"`
-	TicketNr           int                `json:"ticketNr"`
-	PcNr               int                `json:"pcNr"`
-	Name               string             `json:"name"`
-	CreateDT           time.Time          `json:"createDT"`
-	BillDT             time.Time          `json:"billDT"`
-	Prints             int                `json:"prints"`
-	Seal               string             `json:"seal"`
-	ReservationNr      string             `json:"reservationNr"`
-	Info               string             `json:"info"`
-	Footer             string             `json:"footer"`
-	CheckID            int                `json:"checkId"`
-	Orders             Orders             `json:"orders"`
-	CreatedBy          User               `json:"createdBy"`
-	CreatedByName      string             `json:"createdByName"`
-	PC                 PC                 `json:"pc"`
-	PcName             string             `json:"pcName"`
-	Center             Center             `json:"center"`
-	CenterName         string             `json:"centerName"`
-	User               User               `json:"user"`
-	CompressedLines    CompressedLines    `json:"compressedLines"`
-	CompressedPayments CompressedPayments `json:"compressedPayments"`
-	ShiftNr            int                `json:"shiftNr"`
-	Key                string             `json:"key"`
-	InReview           bool               `json:"inReview,omitempty"`
-	ZNumber            int                `json:"zNumber,omitempty"`
-	TableKey           string             `json:"tableKey,omitempty"`
-	TableNr            int                `json:"tableNr,omitempty"`
+	Type          string  `json:"$type"`
+	ActualDate    int     `json:"ActualDate"`
+	CenterKey     string  `json:"CenterKey"`
+	CenterLeftNr  int     `json:"CenterLeftNr"`
+	CenterName    string  `json:"CenterName"`
+	CenterNr      string  `json:"CenterNr"`
+	CenterRightNr int     `json:"CenterRightNr"`
+	Date          int     `json:"Date,omitempty"`
+	Key           string  `json:"Key"`
+	Orders        Orders  `json:"Orders"`
+	PcName        string  `json:"PcName"`
+	PcNr          int     `json:"PcNr"`
+	PrepStatus    string  `json:"PrepStatus"`
+	TableName     string  `json:"TableName"`
+	TicketNr      int     `json:"TicketNr,omitempty"`
+	Time          string  `json:"Time"`
+	TotalPrice    float64 `json:"TotalPrice"`
+	TotalToPay    float64 `json:"TotalToPay"`
+	UserID        string  `json:"UserId"`
+	UserKey       string  `json:"UserKey"`
+	UserName      string  `json:"UserName"`
+	ZNumber       int     `json:"ZNumber,omitempty"`
+	Covers        int     `json:"Covers,omitempty"`
+	TableNr       int     `json:"TableNr,omitempty"`
 }
 
 type Orders []Order
 
 type Order struct {
-	TicketKey   string     `json:"ticketKey"`
-	TotalPrice  float64    `json:"totalPrice"`
-	ActionValue string     `json:"actionValue"`
-	User        User       `json:"user"`
-	UserName    string     `json:"userName"`
-	CreateDT    time.Time  `json:"createDT"`
-	Lines       OrderLines `json:"lines"`
-	Payments    Payments   `json:"payments"`
-	Seal        string     `json:"seal"`
-	StartDT     time.Time  `json:"startDT"`
-	Pc          PC         `json:"pc"`
-	PcKey       string     `json:"pcKey"`
-	PcName      string     `json:"pcName"`
-	Center      Center     `json:"center"`
-	CenterName  string     `json:"centerName"`
-	Key         string     `json:"key"`
-}
-
-type User struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	NickName  string `json:"nickName"`
-	FullName  string `json:"fullName"`
-	Key       string `json:"key"`
+	Type       string     `json:"$type"`
+	ActionID   int        `json:"ActionId"`
+	ActualDate int        `json:"ActualDate"`
+	Date       int        `json:"Date"`
+	Key        string     `json:"Key"`
+	Lines      OrderLines `json:"Lines"`
+	Paymodes   Paymodes   `json:"Paymodes"`
+	PcName     string     `json:"PcName"`
+	PcNr       int        `json:"PcNr"`
+	TicketKey  string     `json:"TicketKey"`
+	Time       string     `json:"Time"`
+	UserID     string     `json:"UserId"`
+	UserKey    string     `json:"UserKey"`
+	UserName   string     `json:"UserName"`
+	TableNr    int        `json:"TableNr,omitempty"`
 }
 
 type OrderLines []OrderLine
 
 type OrderLine struct {
-	ProductKey       string    `json:"productKey"`
-	CourseKey        string    `json:"courseKey"`
-	TotalPriceIncVat float64   `json:"totalPriceIncVat"`
-	TotalPriceExVat  float64   `json:"totalPriceExVat"`
-	TotalVat         float64   `json:"totalVat"`
-	VatPercentage    float64   `json:"vatPercentage"`
-	VatCode          int       `json:"vatCode"`
-	PageKey          string    `json:"pageKey"`
-	MenuID           string    `json:"menuId"`
-	ProductName      string    `json:"productName"`
-	Options          string    `json:"options"`
-	Memo             string    `json:"memo"`
-	Quantity         float64   `json:"quantity"`
-	Units            int       `json:"units"`
-	Price            float64   `json:"price"`
-	CreateDT         time.Time `json:"createDT"`
-	Key              string    `json:"key"`
+	Type                  string        `json:"$type"`
+	Addons                []interface{} `json:"Addons"`
+	CourseName            string        `json:"CourseName"`
+	GroupKey              string        `json:"GroupKey"`
+	GroupLeftNr           int           `json:"GroupLeftNr"`
+	GroupName             string        `json:"GroupName"`
+	GroupRightNr          int           `json:"GroupRightNr"`
+	Key                   string        `json:"Key"`
+	Memo                  string        `json:"Memo"`
+	MenuID                string        `json:"MenuId"`
+	Price                 float64       `json:"Price"`
+	ProductKey            string        `json:"ProductKey"`
+	ProductName           string        `json:"ProductName"`
+	ProductNr             int           `json:"ProductNr"`
+	ProductType           string        `json:"ProductType"`
+	ProductTypeTranslated string        `json:"ProductTypeTranslated"`
+	Qty                   float64       `json:"Qty"`
+	TotalEx               float64       `json:"TotalEx"`
+	TotalInc              float64       `json:"TotalInc"`
+	VatNr                 int           `json:"VatNr"`
+	VatPerc               float64       `json:"VatPerc"`
 }
 
 type Payments []Payment
@@ -104,176 +91,186 @@ type Payment struct {
 	Key              string    `json:"key"`
 }
 
-type Center struct {
-	Name       string `json:"name"`
-	CenterNr   string `json:"centerNr"`
-	GroupLevel int    `json:"groupLevel"`
-	LeftNr     int    `json:"leftNr"`
-	RightNr    int    `json:"rightNr"`
-	Key        string `json:"key"`
-}
+type DxProducts []DxProduct
 
-type PC struct {
-	PcNr       int    `json:"pcNr"`
-	Name       string `json:"name"`
-	PcGroupKey string `json:"pcGroupKey"`
-	Key        string `json:"key"`
-}
-
-type CompressedLines []CompressedLine
-
-type CompressedLine struct {
-	AddOns      []interface{} `json:"addOns"`
-	MenuParts   []interface{} `json:"menuParts"`
-	ProductName string        `json:"productName"`
-	ProductKey  string        `json:"productKey"`
-	Quantity    float64       `json:"quantity"`
-	Course      struct {
-		CourseNr  int    `json:"courseNr"`
-		Name      string `json:"name"`
-		ShortName string `json:"shortName"`
-		Key       string `json:"key"`
-	} `json:"course"`
-	Units          int     `json:"units"`
-	UnitPrice      float64 `json:"unitPrice"`
-	Memo           string  `json:"memo"`
-	TotalPrice     float64 `json:"totalPrice"`
-	TotalNetPrice  float64 `json:"totalNetPrice"`
-	Committed      bool    `json:"committed"`
-	MenuID         string  `json:"menuId"`
-	TransactionID  string  `json:"transactionId"`
-	TerminalID     string  `json:"terminalId"`
-	PageKey        string  `json:"pageKey"`
-	PromoCondition string  `json:"promoCondition"`
-	Margin         float64 `json:"margin"`
-}
-
-type CompressedPayments []CompressedPayment
-
-type CompressedPayment struct {
-	AddOns         []interface{} `json:"addOns"`
-	MenuParts      []interface{} `json:"menuParts"`
-	ProductName    string        `json:"productName"`
-	ProductKey     string        `json:"productKey"`
-	Quantity       float64       `json:"quantity"`
-	Units          int           `json:"units"`
-	UnitPrice      float64       `json:"unitPrice"`
-	TotalPrice     float64       `json:"totalPrice"`
-	TotalNetPrice  float64       `json:"totalNetPrice"`
-	IsExSales      bool          `json:"isExSales"`
-	Committed      bool          `json:"committed"`
-	MenuID         string        `json:"menuId"`
-	TransactionID  string        `json:"transactionId"`
-	TerminalID     string        `json:"terminalId"`
-	PromoCondition string        `json:"promoCondition"`
-	Memo           string        `json:"memo,omitempty"`
-}
-
-type Products []Product
-
-type Product struct {
-	ProductType            string        `json:"productType"`
-	GroupKey               string        `json:"groupKey"`
-	ImageURL               interface{}   `json:"imageUrl"`
-	PrepName               string        `json:"prepName,omitempty"`
-	PreparationInfo        string        `json:"preparationInfo,omitempty"`
-	AutoAddons             []interface{} `json:"autoAddons"`
-	AutoWindows            []interface{} `json:"autoWindows"`
-	Parts                  []interface{} `json:"parts"`
-	Translations           []interface{} `json:"translations"`
-	Prices                 Prices        `json:"prices"`
-	DisplayName            string        `json:"displayName,omitempty"`
-	ProdNr                 int           `json:"prodNr,omitempty"`
-	Name                   string        `json:"name,omitempty"`
-	ShortName              string        `json:"shortName,omitempty"`
-	Info                   string        `json:"info,omitempty"`
-	AllowDiscount          bool          `json:"allowDiscount,omitempty"`
-	Price                  float64       `json:"price,omitempty"`
-	ShowInSearch           bool          `json:"showInSearch,omitempty"`
-	PrintX                 int           `json:"printX,omitempty"`
-	PrepPrintAddons        bool          `json:"prepPrintAddons,omitempty"`
-	Description            string        `json:"description,omitempty"`
-	Key                    string        `json:"key"`
-	AskMemo                bool          `json:"askMemo,omitempty"`
-	KdsSummary             bool          `json:"kdsSummary,omitempty"`
-	AskPrice               bool          `json:"askPrice,omitempty"`
-	PrintMemo              bool          `json:"printMemo,omitempty"`
-	PrepTotal              bool          `json:"prepTotal,omitempty"`
-	AskUnit                bool          `json:"askUnit,omitempty"`
-	UnitID                 int           `json:"unitId,omitempty"`
-	UnitBase               int           `json:"unitBase,omitempty"`
-	VipOnly                bool          `json:"vipOnly,omitempty"`
-	ReadOnly               bool          `json:"readOnly,omitempty"`
-	ShowEditor             bool          `json:"showEditor,omitempty"`
-	IncompleteMenuOptionID int           `json:"incompleteMenuOptionId,omitempty"`
-	AllInMenu              bool          `json:"allInMenu,omitempty"`
-	TableRequired          bool          `json:"tableRequired,omitempty"`
-	VoucherServiceName     string        `json:"voucherServiceName,omitempty"`
-	PrintCoveredProducts   bool          `json:"printCoveredProducts,omitempty"`
-	AutoCalcPrice          bool          `json:"autoCalcPrice,omitempty"`
-	AskCourse              bool          `json:"askCourse,omitempty"`
-	AskQty                 bool          `json:"askQty,omitempty"`
+type DxProduct struct {
+	Type               string        `json:"$type"`
+	AllowDiscount      bool          `json:"AllowDiscount,omitempty"`
+	AskCourse          bool          `json:"AskCourse"`
+	AutoAddons         []interface{} `json:"AutoAddons"`
+	AutoWindows        []interface{} `json:"AutoWindows"`
+	BarCode            string        `json:"BarCode"`
+	CenterKeys         []interface{} `json:"CenterKeys"`
+	Color              Color         `json:"Color"`
+	ColorKey           ColorKey      `json:"ColorKey,omitempty"`
+	Description        string        `json:"Description"`
+	Fields             []interface{} `json:"Fields"`
+	GroupKey           string        `json:"GroupKey"`
+	Info               string        `json:"Info"`
+	KDSColorKey        KDSColorKey   `json:"KDSColorKey"`
+	Key                string        `json:"Key"`
+	Name               string        `json:"Name"`
+	Parts              []interface{} `json:"Parts"`
+	PAXCode            string        `json:"PAXCode"`
+	PieceGood          bool          `json:"PieceGood,omitempty"`
+	PreparationInfo    string        `json:"PreparationInfo"`
+	PrepGroupKey       string        `json:"PrepGroupKey,omitempty"`
+	PrepName           string        `json:"PrepName"`
+	PrepPrintAddons    bool          `json:"PrepPrintAddons"`
+	Price              float64       `json:"Price,omitempty"`
+	Prices             Prices        `json:"Prices"`
+	PrintMemo          bool          `json:"PrintMemo"`
+	PrintX             int           `json:"PrintX"`
+	ProdNr             int           `json:"ProdNr"`
+	ProductLinks       []interface{} `json:"ProductLinks"`
+	ProductType        string        `json:"ProductType"`
+	Promo              string        `json:"Promo"`
+	PromoCondition     string        `json:"PromoCondition"`
+	ShortName          string        `json:"ShortName"`
+	ShowInSearch       bool          `json:"ShowInSearch"`
+	Tags               []interface{} `json:"Tags"`
+	TimeZoneKeys       []interface{} `json:"TimeZoneKeys"`
+	Translations       []interface{} `json:"Translations"`
+	UnitBase           int           `json:"UnitBase"`
+	Vat                float64       `json:"Vat,omitempty"`
+	Vat2               float64       `json:"Vat2,omitempty"`
+	AskMemo            bool          `json:"AskMemo,omitempty"`
+	AskPrice           bool          `json:"AskPrice,omitempty"`
+	AllowZeroPrice     bool          `json:"AllowZeroPrice,omitempty"`
+	ImageKey           string        `json:"ImageKey,omitempty"`
+	PaymodeKey         string        `json:"PaymodeKey,omitempty"`
+	VoucherServiceName string        `json:"VoucherServiceName,omitempty"`
+	Paymode            DxPaymode     `json:"Paymode,omitempty"`
 }
 
 type Prices []Price
 
 type Price struct {
-	SeqNr int     `json:"seqNr"`
-	Price float64 `json:"price"`
-	Key   string  `json:"key"`
+	Type         string  `json:"$type"`
+	SeqNr        int     `json:"seqNr"`
+	Price        float64 `json:"price"`
+	PriceCodeKey string  `json:"PriceCodeKey"`
+	Key          string  `json:"key"`
 }
 
-type ProductGroups []ProductGroup
+type DxPaymodes []DxPaymode
 
-type ProductGroup struct {
-	Name       string `json:"name"`
-	Data       string `json:"data"`
-	GroupLevel int    `json:"groupLevel"`
-	LeftNr     int    `json:"leftNr"`
-	RightNr    int    `json:"rightNr"`
-	Key        string `json:"key"`
-	GroupNr    int    `json:"groupNr,omitempty"`
-}
-
-type Paymodes []Paymode
-
-type Paymode struct {
-	DefaultCash     bool    `json:"defaultCash,omitempty"`
-	Drawer          bool    `json:"drawer,omitempty"`
-	IsCash          bool    `json:"isCash,omitempty"`
-	OpenDrawer      bool    `json:"openDrawer"`
-	GroupKey        string  `json:"groupKey"`
-	GroupLeftNr     int     `json:"groupLeftNr"`
-	GroupRightNr    int     `json:"groupRightNr"`
-	TerminalName    string  `json:"terminalName"`
-	Footer          string  `json:"footer"`
-	Rounding        float64 `json:"rounding,omitempty"`
-	Name            string  `json:"name"`
-	ShortName       string  `json:"shortName"`
-	Info            string  `json:"info"`
-	AskPrice        bool    `json:"askPrice,omitempty"`
-	ShowInSearch    bool    `json:"showInSearch"`
-	PrintX          int     `json:"printX"`
-	PrintMemo       bool    `json:"printMemo"`
-	Description     string  `json:"description"`
-	DisplayName     string  `json:"displayName"`
-	Key             string  `json:"key"`
-	PaymodeTypeID   int     `json:"paymodeTypeId,omitempty"`
-	ProdNr          int     `json:"prodNr,omitempty"`
-	AskMemo         bool    `json:"askMemo,omitempty"`
-	InvoiceTypeID   int     `json:"invoiceTypeId,omitempty"`
-	PrintSig        bool    `json:"printSig,omitempty"`
-	AccountRequired bool    `json:"accountRequired,omitempty"`
+type DxPaymode struct {
+	Type            string      `json:"$type"`
+	AskPrice        bool        `json:"AskPrice,omitempty"`
+	Color           Color       `json:"Color"`
+	ColorKey        ColorKey    `json:"ColorKey,omitempty"`
+	ConnectionID    string      `json:"ConnectionId"`
+	Data            string      `json:"Data"`
+	DefaultCash     bool        `json:"DefaultCash"`
+	Description     string      `json:"Description"`
+	Footer          string      `json:"Footer"`
+	GroupKey        string      `json:"GroupKey"`
+	GroupLeftNr     int         `json:"GroupLeftNr"`
+	GroupRightNr    int         `json:"GroupRightNr"`
+	Hotel           string      `json:"Hotel"`
+	Info            string      `json:"Info"`
+	KDSColorKey     KDSColorKey `json:"KDSColorKey"`
+	Key             string      `json:"Key"`
+	Name            string      `json:"Name"`
+	OpenDrawer      bool        `json:"OpenDrawer,omitempty"`
+	PrintMemo       bool        `json:"PrintMemo"`
+	PrintX          int         `json:"PrintX"`
+	ProdNr          int         `json:"ProdNr,omitempty"`
+	ShortName       string      `json:"ShortName"`
+	ShowInSearch    bool        `json:"ShowInSearch"`
+	TerminalName    string      `json:"TerminalName"`
+	UnitBase        int         `json:"UnitBase"`
+	NoRefundDiffKey string      `json:"NoRefundDiffKey,omitempty"`
+	PaymodeType     string      `json:"PaymodeType,omitempty"`
+	PaymodeTypeID   int         `json:"PaymodeTypeId,omitempty"`
+	AskQty          bool        `json:"AskQty,omitempty"`
+	IsCash          bool        `json:"IsCash,omitempty"`
+	Price           float64     `json:"Price,omitempty"`
 }
 
 type PaymodeGroups []PaymodeGroup
 
 type PaymodeGroup struct {
-	Name       string `json:"name"`
-	Data       string `json:"data"`
-	GroupLevel int    `json:"groupLevel"`
-	LeftNr     int    `json:"leftNr"`
-	RightNr    int    `json:"rightNr"`
-	Key        string `json:"key"`
-	GroupNr    int    `json:"groupNr,omitempty"`
+	Type       string   `json:"$type"`
+	Data       string   `json:"Data"`
+	GroupLevel int      `json:"GroupLevel"`
+	Key        string   `json:"Key"`
+	LeftNr     int      `json:"LeftNr"`
+	Name       string   `json:"Name"`
+	RightNr    int      `json:"RightNr"`
+	ColorKey   ColorKey `json:"ColorKey,omitempty"`
+}
+
+type ColorKey struct {
+	Type  string `json:"$type"`
+	PcKey int    `json:"PcKey"`
+	RecNr int    `json:"RecNr"`
+}
+
+type Color struct {
+	Type       string `json:"$type"`
+	Background string `json:"Background"`
+	Foreground string `json:"Foreground"`
+	Key        string `json:"Key"`
+}
+
+type KDSColorKey struct {
+	Type string `json:"$type"`
+}
+
+type Paymodes []Paymode
+
+type Paymode struct {
+	Type          string  `json:"$type"`
+	GroupKey      string  `json:"GroupKey"`
+	GroupLeftNr   int     `json:"GroupLeftNr"`
+	GroupName     string  `json:"GroupName"`
+	GroupRightNr  int     `json:"GroupRightNr"`
+	Key           string  `json:"Key"`
+	Memo          string  `json:"Memo"`
+	PaymodeKey    string  `json:"PaymodeKey"`
+	PaymodeName   string  `json:"PaymodeName"`
+	PaymodeNr     int     `json:"PaymodeNr"`
+	PaymodeType   string  `json:"PaymodeType"`
+	Price         float64 `json:"Price"`
+	Qty           float64 `json:"Qty"`
+	TerminalID    string  `json:"TerminalId"`
+	Total         float64 `json:"Total"`
+	TransactionID string  `json:"TransactionId"`
+}
+
+type DxProdGroups []DxProdGroup
+
+type DxProdGroup struct {
+	Type       string   `json:"$type"`
+	ColorKey   ColorKey `json:"ColorKey,omitempty"`
+	Data       string   `json:"Data"`
+	GroupLevel int      `json:"GroupLevel"`
+	Key        string   `json:"Key"`
+	LeftNr     int      `json:"LeftNr"`
+	Name       string   `json:"Name"`
+	RightNr    int      `json:"RightNr"`
+	VATCode    VATCode  `json:"VatCode,omitempty"`
+	VatCodeKey string   `json:"VatCodeKey,omitempty"`
+}
+
+type VATCode struct {
+	Type     string `json:"$type"`
+	Code     int    `json:"Code"`
+	Default  bool   `json:"Default"`
+	Default2 bool   `json:"Default2"`
+	Key      string `json:"Key"`
+	Name     string `json:"Name"`
+	Vats     DxVATs `json:"Vats"`
+}
+
+type DxVATs []DxVAT
+
+type DxVAT struct {
+	Type        string  `json:"$type"`
+	CountryCode string  `json:"CountryCode"`
+	FromDate    float64 `json:"FromDate"`
+	Key         string  `json:"Key"`
+	VAT         float64 `json:"VAT"`
 }

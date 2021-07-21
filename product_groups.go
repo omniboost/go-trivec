@@ -103,7 +103,7 @@ func (r *ProductGroupsRequest) NewResponseBody() *ProductGroupsRequestResponseBo
 	return &ProductGroupsRequestResponseBody{}
 }
 
-type ProductGroupsRequestResponseBody ProductGroups
+type ProductGroupsRequestResponseBody DxProdGroups
 
 func (r *ProductGroupsRequest) URL() *url.URL {
 	u := r.client.GetEndpointURL("Catalog/productgrouplist.json", r.PathParams())
