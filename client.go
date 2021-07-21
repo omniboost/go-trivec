@@ -266,7 +266,7 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		c.beforeRequestDo(c.http, req, body)
 	}
 
-	if c.debug == true {
+	if c.debug {
 		dump, _ := httputil.DumpRequestOut(req, true)
 		log.Println(string(dump))
 	}
@@ -287,7 +287,7 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		}
 	}()
 
-	if c.debug == true {
+	if c.debug {
 		dump, _ := httputil.DumpResponse(httpResp, true)
 		log.Println(string(dump))
 	}

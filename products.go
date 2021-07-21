@@ -1,6 +1,7 @@
 package trivec
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 
@@ -113,7 +114,7 @@ func (r *ProductsRequest) URL() *url.URL {
 
 func (r *ProductsRequest) Do() (ProductsRequestResponseBody, error) {
 	// Create http request
-	req, err := r.client.NewRequest(nil, r)
+	req, err := r.client.NewRequest(context.TODO(), r)
 	if err != nil {
 		return *r.NewResponseBody(), err
 	}

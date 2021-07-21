@@ -36,5 +36,8 @@ func TestMain(m *testing.M) {
 	if environment != "" {
 		client.SetEnvironment(environment)
 	}
+	client.SetDisallowUnknownFields(true)
 	m.Run()
+
+	os.Exit(0)
 }

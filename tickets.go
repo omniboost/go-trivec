@@ -1,6 +1,7 @@
 package trivec
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 
@@ -116,7 +117,7 @@ func (r *TicketsRequest) URL() *url.URL {
 
 func (r *TicketsRequest) Do() (TicketsRequestResponseBody, error) {
 	// Create http request
-	req, err := r.client.NewRequest(nil, r)
+	req, err := r.client.NewRequest(context.TODO(), r)
 	if err != nil {
 		return *r.NewResponseBody(), err
 	}
