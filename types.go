@@ -226,6 +226,7 @@ type Paymode struct {
 	GroupKey      string  `json:"GroupKey"`
 	GroupLeftNr   int     `json:"GroupLeftNr"`
 	GroupName     string  `json:"GroupName"`
+	GroupNr       int     `json:"GroupNr"`
 	GroupRightNr  int     `json:"GroupRightNr"`
 	Key           string  `json:"Key"`
 	Memo          string  `json:"Memo"`
@@ -236,6 +237,7 @@ type Paymode struct {
 	Price         float64 `json:"Price"`
 	Qty           float64 `json:"Qty"`
 	TerminalID    string  `json:"TerminalId"`
+	Tip           float64 `json:"Tip"`
 	Total         float64 `json:"Total"`
 	TransactionID string  `json:"TransactionId"`
 }
