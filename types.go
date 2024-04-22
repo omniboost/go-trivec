@@ -14,6 +14,9 @@ type Ticket struct {
 	CenterRightNr int     `json:"CenterRightNr"`
 	Date          Date    `json:"Date,omitempty"`
 	Key           string  `json:"Key"`
+	AccountKey    string  `json:"AccountKey"`
+	AccountName   string  `json:"AccountName"`
+	AccountNr     string  `json:"AccountNr"`
 	Orders        Orders  `json:"Orders"`
 	PcName        string  `json:"PcName"`
 	PcNr          int     `json:"PcNr"`
@@ -56,6 +59,7 @@ type OrderLines []OrderLine
 type OrderLine struct {
 	Type                  string        `json:"$type"`
 	Addons                []interface{} `json:"Addons"`
+	CourseNr              int           `json:"CourseNr"`
 	CourseName            string        `json:"CourseName"`
 	GroupKey              string        `json:"GroupKey"`
 	GroupLeftNr           int           `json:"GroupLeftNr"`
@@ -71,6 +75,7 @@ type OrderLine struct {
 	ProductType           string        `json:"ProductType"`
 	ProductTypeTranslated string        `json:"ProductTypeTranslated"`
 	Qty                   float64       `json:"Qty"`
+	TotalDisc             float64       `json:"TotalDisc"`
 	TotalEx               float64       `json:"TotalEx"`
 	TotalInc              float64       `json:"TotalInc"`
 	VatNr                 int           `json:"VatNr"`
@@ -275,4 +280,28 @@ type DxVAT struct {
 	FromDate    Date    `json:"FromDate"`
 	Key         string  `json:"Key"`
 	VAT         float64 `json:"VAT"`
+}
+
+type AccountInfo struct {
+	Type        string `json:"$type"`
+	Address     string `json:"Address"`
+	City        string `json:"City"`
+	ClientNr    string `json:"ClientNr"`
+	CompanyName string `json:"CompanyName"`
+	Country     string `json:"Country"`
+	Data        string `json:"Data"`
+	EMail       string `json:"EMail"`
+	FirstName   string `json:"FirstName"`
+	Gender      string `json:"Gender"`
+	GenderID    int    `json:"GenderId"`
+	Info        string `json:"Info"`
+	Key         string `json:"Key"`
+	Language    string `json:"Language"`
+	LastName    string `json:"LastName"`
+	MiddleName  string `json:"MiddleName"`
+	NickName    string `json:"NickName"`
+	Phone       string `json:"Phone"`
+	State       string `json:"State"`
+	VATNumber   string `json:"VATNumber"`
+	ZipCode     string `json:"ZipCode"`
 }
