@@ -312,13 +312,18 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 	}
 
 	errResp := &ErrorResponse{Response: httpResp}
-	err = c.Unmarshal(httpResp.Body, body, errResp)
+	httpErr := &HTTPError{Response: httpResp}
+	err = c.Unmarshal(httpResp.Body, body, errResp, httpErr)
 	if err != nil {
 		return httpResp, err
 	}
 
 	if errResp.Error() != "" {
 		return httpResp, errResp
+	}
+
+	if httpErr.Error() != "" {
+		return httpResp, httpErr
 	}
 
 	return httpResp, nil
@@ -433,6 +438,28 @@ func (r *ErrorResponse) Error() string {
 		return ""
 	}
 	return errs.Error()
+}
+
+// {
+//   "$type": "System.Web.Http.HttpError, System.Web.Http",
+//   "Message": "No HTTP resource was found that matches the request URI 'http://6676-92-70-210-65.ngrok-free.app/Catalog/PaymodeList.json?appid=d8f44c37d2d4465cbc03c55b45d6ab43'.",
+//   "MessageDetail": "No action was found on the controller 'Catalog' that matches the name 'PaymodeList.json'."
+// }
+
+type HTTPError struct {
+	// HTTP response that caused this error
+	Response *http.Response
+
+	Type          string `json:"$type"`
+	Message       string `json:"Message"`
+	MessageDetail string `json:"MessageDetail"`
+}
+
+func (e HTTPError) Error() string {
+	if e.Type != "" || e.Message != "" || e.MessageDetail != "" {
+		return fmt.Sprintf("%s: %s: %s", e.Type, e.Message, e.MessageDetail)
+	}
+	return ""
 }
 
 func checkContentType(response *http.Response) error {
