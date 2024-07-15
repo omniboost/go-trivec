@@ -313,7 +313,7 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 
 	errResp := &ErrorResponse{Response: httpResp}
 	httpErr := &HTTPError{Response: httpResp}
-	err = c.Unmarshal(httpResp.Body, body, errResp, httpErr)
+	err = c.Unmarshal(httpResp.Body, []any{body}, []any{errResp, httpErr})
 	if err != nil {
 		return httpResp, err
 	}
@@ -329,17 +329,16 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 	return httpResp, nil
 }
 
-func (c *Client) Unmarshal(r io.Reader, vv ...interface{}) error {
-	if len(vv) == 0 {
+func (c *Client) Unmarshal(r io.Reader, vv []interface{}, optionalVv []interface{}) error {
+	if len(vv) == 0 && len(optionalVv) == 0 {
 		return nil
 	}
 
-	b, err := ioutil.ReadAll(r)
+	b, err := io.ReadAll(r)
 	if err != nil {
 		return err
 	}
 
-	errs := []error{}
 	for _, v := range vv {
 		r := bytes.NewReader(b)
 		dec := json.NewDecoder(r)
@@ -349,18 +348,15 @@ func (c *Client) Unmarshal(r io.Reader, vv ...interface{}) error {
 
 		err := dec.Decode(v)
 		if err != nil && err != io.EOF {
-			errs = append(errs, err)
+			return errors.WithStack((err))
 		}
-
 	}
 
-	if len(errs) == len(vv) {
-		// Everything errored
-		msgs := make([]string, len(errs))
-		for i, e := range errs {
-			msgs[i] = fmt.Sprint(e)
-		}
-		return errors.New(strings.Join(msgs, ", "))
+	for _, v := range optionalVv {
+		r := bytes.NewReader(b)
+		dec := json.NewDecoder(r)
+
+		_ = dec.Decode(v)
 	}
 
 	return nil
