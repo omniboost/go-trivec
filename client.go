@@ -48,7 +48,8 @@ func NewClient(httpClient *http.Client, subscriptionKey, serviceKey, serviceID, 
 	client.SetServiceKey(serviceKey)
 	client.SetServiceID(serviceID)
 	client.SetAppID(appID)
-	client.SetBaseURL(BaseURL)
+	client.SetBaseURLExportService(BaseURL)
+	client.SetBaseURLLiteAPI(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
 	client.SetMediaType(mediaType)
@@ -63,8 +64,9 @@ type Client struct {
 	// HTTP client used to communicate with the Client.
 	http *http.Client
 
-	debug   bool
-	baseURL url.URL
+	debug                bool
+	baseURLExportService url.URL
+	baseURLLiteAPI       url.URL
 
 	// credentials
 	subscriptionKey string
@@ -142,12 +144,20 @@ func (c *Client) SetEnvironment(environment string) {
 	c.environment = environment
 }
 
-func (c Client) BaseURL() url.URL {
-	return c.baseURL
+func (c Client) BaseURLExportService() url.URL {
+	return c.baseURLExportService
 }
 
-func (c *Client) SetBaseURL(baseURL url.URL) {
-	c.baseURL = baseURL
+func (c *Client) SetBaseURLExportService(baseURL url.URL) {
+	c.baseURLExportService = baseURL
+}
+
+func (c Client) BaseURLLiteAPI() url.URL {
+	return c.baseURLLiteAPI
+}
+
+func (c *Client) SetBaseURLLiteAPI(baseURL url.URL) {
+	c.baseURLLiteAPI = baseURL
 }
 
 func (c *Client) SetMediaType(mediaType string) {
@@ -182,26 +192,33 @@ func (c *Client) SetBeforeRequestDo(fun BeforeRequestDoCallback) {
 	c.beforeRequestDo = fun
 }
 
-func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
-	clientURL := c.BaseURL()
-	clientURL.Host = strings.Replace(clientURL.Host, "{{.service_id}}", c.ServiceID(), -1)
+func (c *Client) GetEndpointURLExportService(p string, pathParams PathParams) url.URL {
+	return c.GetEndpointURL(c.BaseURLExportService(), p, pathParams)
+}
+
+func (c *Client) GetEndpointURLLiteAPI(p string, pathParams PathParams) url.URL {
+	return c.GetEndpointURL(c.BaseURLLiteAPI(), p, pathParams)
+}
+
+func (c *Client) GetEndpointURL(baseURL url.URL, p string, pathParams PathParams) url.URL {
+	baseURL.Host = strings.Replace(baseURL.Host, "{{.service_id}}", c.ServiceID(), -1)
 
 	parsed, err := url.Parse(p)
 	if err != nil {
 		log.Fatal(err)
 	}
-	q := clientURL.Query()
+	q := baseURL.Query()
 	q.Add("appid", c.AppID())
 	for k, vv := range parsed.Query() {
 		for _, v := range vv {
 			q.Add(k, v)
 		}
 	}
-	clientURL.RawQuery = q.Encode()
+	baseURL.RawQuery = q.Encode()
 
-	clientURL.Path = path.Join(clientURL.Path, parsed.Path)
+	baseURL.Path = path.Join(baseURL.Path, parsed.Path)
 
-	tmpl, err := template.New("path").Parse(clientURL.Path)
+	tmpl, err := template.New("path").Parse(baseURL.Path)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -214,8 +231,8 @@ func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
 		log.Fatal(err)
 	}
 
-	clientURL.Path = buf.String()
-	return clientURL
+	baseURL.Path = buf.String()
+	return baseURL
 }
 
 func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, error) {

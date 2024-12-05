@@ -110,7 +110,7 @@ func (r *AccountInfoRequest) NewResponseBody() *AccountInfoRequestResponseBody {
 type AccountInfoRequestResponseBody AccountInfo
 
 func (r *AccountInfoRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("account/info.json/{{.account_key}}", r.PathParams())
+	u := r.client.GetEndpointURLExportService("account/info.json/{{.account_key}}", r.PathParams())
 	return &u
 }
 

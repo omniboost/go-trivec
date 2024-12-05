@@ -14,7 +14,8 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	baseURLString := os.Getenv("BASE_URL")
+	baseURLExportServiceString := os.Getenv("BASE_URL_EXPORT_SERVICE")
+	baseURLLiteAPIString := os.Getenv("BASE_URL_LITE_API")
 	subscriptionKey := os.Getenv("SUBSCRIPTION_KEY")
 	serviceKey := os.Getenv("SERVICE_KEY")
 	serviceID := os.Getenv("SERVICE_ID")
@@ -26,12 +27,19 @@ func TestMain(m *testing.M) {
 	if debug != "" {
 		client.SetDebug(true)
 	}
-	if baseURLString != "" {
-		baseURL, err := url.Parse(baseURLString)
+	if baseURLExportServiceString != "" {
+		baseURL, err := url.Parse(baseURLExportServiceString)
 		if err != nil {
 			log.Fatal(err)
 		}
-		client.SetBaseURL(*baseURL)
+		client.SetBaseURLExportService(*baseURL)
+	}
+	if baseURLLiteAPIString != "" {
+		baseURL, err := url.Parse(baseURLLiteAPIString)
+		if err != nil {
+			log.Fatal(err)
+		}
+		client.SetBaseURLLiteAPI(*baseURL)
 	}
 	if environment != "" {
 		client.SetEnvironment(environment)

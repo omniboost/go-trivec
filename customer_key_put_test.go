@@ -6,9 +6,10 @@ import (
 	"testing"
 )
 
-func TestAccountInfo(t *testing.T) {
-	req := client.NewAccountInfoRequest()
+func TestCustomerKeyPut(t *testing.T) {
+	req := client.NewCustomerKeyPutRequest()
 	req.PathParams().AccountKey = "3526138085244930"
+	req.RequestBody().ClientNr =  "123"
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)
@@ -17,4 +18,6 @@ func TestAccountInfo(t *testing.T) {
 	b, _ := json.MarshalIndent(resp, "", "  ")
 	log.Println(string(b))
 }
+
+
 

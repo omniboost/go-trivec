@@ -320,3 +320,16 @@ type AccountInfo struct {
 	BirthDay    float64 `json:"BirthDay"`
 	CountryNr   int     `json:"CountryNr"`
 }
+
+type Customer struct {
+	Key       string `json:"Key,omitempty"`
+	ClientNr  string `json:"ClientNr,omitempty"`
+	FirstName string `json:"FirstName,omitempty"`
+	LastName  string `json:"LastName,omitempty"`
+	Company   string `json:"Company,omitempty"`
+	VatNumber string `json:"VatNumber,omitempty"`
+	Address   string `json:"Address,omitempty"`
+	ZipCode   string `json:"ZipCode,omitempty"`
+	City      string `json:"City,omitempty"`
+	Country   string `json:"Country,omitempty"`
+}

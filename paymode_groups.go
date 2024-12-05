@@ -107,7 +107,7 @@ func (r *PaymodeGroupsRequest) NewResponseBody() *PaymodeGroupsRequestResponseBo
 type PaymodeGroupsRequestResponseBody PaymodeGroups
 
 func (r *PaymodeGroupsRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("Catalog/paymodegrouplist.json", r.PathParams())
+	u := r.client.GetEndpointURLExportService("Catalog/paymodegrouplist.json", r.PathParams())
 	return &u
 }
 

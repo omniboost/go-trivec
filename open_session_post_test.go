@@ -6,9 +6,8 @@ import (
 	"testing"
 )
 
-func TestAccountInfo(t *testing.T) {
-	req := client.NewAccountInfoRequest()
-	req.PathParams().AccountKey = "3526138085244930"
+func TestOpenSessionPost(t *testing.T) {
+	req := client.NewOpenSessionPostRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)
@@ -17,4 +16,6 @@ func TestAccountInfo(t *testing.T) {
 	b, _ := json.MarshalIndent(resp, "", "  ")
 	log.Println(string(b))
 }
+
+
 
