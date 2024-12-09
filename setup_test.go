@@ -20,12 +20,16 @@ func TestMain(m *testing.M) {
 	serviceKey := os.Getenv("SERVICE_KEY")
 	serviceID := os.Getenv("SERVICE_ID")
 	appID := os.Getenv("APP_ID")
+	secret := os.Getenv("SECRET")
 	environment := os.Getenv("ENVIRONMENT")
 	debug := os.Getenv("DEBUG")
 
 	client = trivec.NewClient(nil, subscriptionKey, serviceKey, serviceID, appID)
 	if debug != "" {
 		client.SetDebug(true)
+	}
+	if secret != "" {
+		client.SetSecret(secret)
 	}
 	if baseURLExportServiceString != "" {
 		baseURL, err := url.Parse(baseURLExportServiceString)

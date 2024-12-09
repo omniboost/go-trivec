@@ -61,6 +61,12 @@ func (d *Date) UnmarshalJSON(text []byte) (err error) {
 		return nil
 	}
 
+	// try datetime without time zone
+	d.Time, err = time.Parse("2006-01-02T15:04:05", value)
+	if err == nil {
+		return nil
+	}
+
 	d.Time, err = time.Parse("20060102", value)
 	return
 }

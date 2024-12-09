@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/omniboost/go-trivec/omitempty"
 	"github.com/omniboost/go-trivec/utils"
 )
 
@@ -91,6 +92,10 @@ func (r CustomerKeyPutRequest) NewRequestBody() CustomerKeyPutRequestBody {
 
 type CustomerKeyPutRequestBody Customer
 
+func (r CustomerKeyPutRequestBody) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(r)
+}
+
 func (r *CustomerKeyPutRequest) RequestBody() *CustomerKeyPutRequestBody {
 	return &r.requestBody
 }
@@ -108,6 +113,12 @@ func (r *CustomerKeyPutRequest) NewResponseBody() *CustomerKeyPutRequestResponse
 }
 
 type CustomerKeyPutRequestResponseBody struct {
+	Customer Customer `json:"customer"`
+	Sucess   bool     `json:"success"`
+}
+
+func (r CustomerKeyPutRequestResponseBody) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(r)
 }
 
 func (r *CustomerKeyPutRequest) URL() *url.URL {
@@ -132,4 +143,3 @@ func (r *CustomerKeyPutRequest) Do() (CustomerKeyPutRequestResponseBody, error) 
 	_, err = r.client.Do(req, responseBody)
 	return *responseBody, err
 }
-

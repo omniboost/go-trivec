@@ -73,6 +73,7 @@ type Client struct {
 	serviceKey      string
 	serviceID       string
 	appID           string
+	secret          string
 	environment     string
 
 	// User agent for client
@@ -134,6 +135,14 @@ func (c Client) AppID() string {
 
 func (c *Client) SetAppID(appID string) {
 	c.appID = appID
+}
+
+func (c Client) Secret() string {
+	return c.secret
+}
+
+func (c *Client) SetSecret(secret string) {
+	c.secret = secret
 }
 
 func (c Client) Environment() string {
@@ -267,7 +276,9 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
 	r.Header.Add("Subscription-Key", c.SubscriptionKey())
+	r.Header.Add("Appid", c.AppID())
 	r.Header.Add("ServiceKey", c.ServiceKey())
+	r.Header.Add("Secret", c.Secret())
 	if c.Environment() != "" {
 		r.Header.Add("Environment", c.Environment())
 	}

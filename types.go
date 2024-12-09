@@ -1,6 +1,11 @@
 package trivec
 
-import "time"
+import (
+	"time"
+
+	"github.com/cydev/zero"
+	"github.com/omniboost/go-trivec/omitempty"
+)
 
 type Tickets []Ticket
 
@@ -322,14 +327,32 @@ type AccountInfo struct {
 }
 
 type Customer struct {
-	Key       string `json:"Key,omitempty"`
-	ClientNr  string `json:"ClientNr,omitempty"`
-	FirstName string `json:"FirstName,omitempty"`
-	LastName  string `json:"LastName,omitempty"`
-	Company   string `json:"Company,omitempty"`
-	VatNumber string `json:"VatNumber,omitempty"`
-	Address   string `json:"Address,omitempty"`
-	ZipCode   string `json:"ZipCode,omitempty"`
-	City      string `json:"City,omitempty"`
-	Country   string `json:"Country,omitempty"`
+	Key         string  `json:"Key,omitempty"`
+	AccountType int     `json:"AccountType,omitempty"`
+	ClientNr    string  `json:"ClientNr,omitempty"`
+	FirstName   string  `json:"FirstName,omitempty"`
+	LastName    string  `json:"LastName,omitempty"`
+	Company     string  `json:"Company,omitempty"`
+	VatNumber   string  `json:"VatNumber,omitempty"`
+	Address     string  `json:"Address,omitempty"`
+	ZipCode     string  `json:"ZipCode,omitempty"`
+	City        string  `json:"City,omitempty"`
+	Country     string  `json:"Country,omitempty"`
+	BirthDay    Date    `json:"BirthDay,omitempty"`
+	Blocked     bool    `json:"Blocked,omitempty"`
+	EMail       string  `json:"EMail,omitempty"`
+	MinValue    float64 `json:"MinValue,omitempty"`
+	Phone       string  `json:"Phone,omitempty"`
+	Saldo       float64 `json:"Saldo,omitempty"`
+	ValidFrom   Date    `json:"ValidFrom,omitempty"`
+	ValidTo     Date    `json:"ValidTo,omitempty"`
+	Vip         bool    `json:"Vip,omitempty"`
+}
+
+func (j Customer) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(j)
+}
+
+func (j Customer) IsEmpty() bool {
+	return zero.IsZero(j)
 }
