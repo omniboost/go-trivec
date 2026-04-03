@@ -142,7 +142,7 @@ type DxProduct struct {
 	TimeZoneKeys       []interface{} `json:"TimeZoneKeys"`
 	Translations       []interface{} `json:"Translations"`
 	UnitBase           int           `json:"UnitBase"`
-	Vat                float64       `json:"Vat,omitempty"`
+	Vat                DxVATCode     `json:"Vat,omitempty"`
 	Vat2               float64       `json:"Vat2,omitempty"`
 	AskMemo            bool          `json:"AskMemo,omitempty"`
 	AskPrice           bool          `json:"AskPrice,omitempty"`
@@ -355,4 +355,13 @@ func (j Customer) MarshalJSON() ([]byte, error) {
 
 func (j Customer) IsEmpty() bool {
 	return zero.IsZero(j)
+}
+
+type DxVATCode struct {
+	Type       string  `json:"$type"`
+	Code       int     `json:"Code"`
+	Default2   bool    `json:"Default2"`
+	Key        string  `json:"Key"`
+	Name       string  `json:"Name"`
+	Percentage float64 `json:"Percentage"`
 }
