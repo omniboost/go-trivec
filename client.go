@@ -15,8 +15,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/hashicorp/go-multierror"
-	"github.com/pkg/errors"
+	"gitlab.com/tozd/go/errors"
 )
 
 const (
@@ -342,16 +341,17 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 	errResp := &ErrorResponse{Response: httpResp}
 	httpErr := &HTTPError{Response: httpResp}
 	err = c.Unmarshal(httpResp.Body, []any{body}, []any{errResp, httpErr})
+
+	// if we get back an error response, return it
+	for _, v := range []error{errResp, httpErr} {
+		if v.Error() != "" {
+			return httpResp, v
+		}
+	}
+
+	// the unmarshal failed, return the error
 	if err != nil {
 		return httpResp, err
-	}
-
-	if errResp.Error() != "" {
-		return httpResp, errResp
-	}
-
-	if httpErr.Error() != "" {
-		return httpResp, httpErr
 	}
 
 	return httpResp, nil
@@ -453,15 +453,15 @@ type ErrorResponse struct {
 }
 
 func (r *ErrorResponse) Error() string {
-	var errs *multierror.Error
+	var err error
 	for _, m := range r.Errors.Date {
-		errs = multierror.Append(errs, errors.New(m))
+		err = errors.Join(err, errors.New(m))
 	}
 
-	if errs == nil {
-		return ""
+	if err != nil {
+		err.Error()
 	}
-	return errs.Error()
+	return ""
 }
 
 // {
