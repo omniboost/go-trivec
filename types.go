@@ -142,8 +142,11 @@ type DxProduct struct {
 	TimeZoneKeys    []interface{} `json:"TimeZoneKeys"`
 	Translations    []interface{} `json:"Translations"`
 	UnitBase        int           `json:"UnitBase"`
-	// Vat                DxVATCode     `json:"Vat,omitempty"`
-	// Vat2               float64       `json:"Vat2,omitempty"`
+	// Vat is the VAT percentage of the product. Vat2 is the percentage used
+	// when takeaway mode is enabled on the ticket. Both are null for products
+	// without VAT, so keep them as pointers: a nil is not the same as 0%.
+	Vat                *float64  `json:"Vat"`
+	Vat2               *float64  `json:"Vat2"`
 	AskMemo            bool      `json:"AskMemo,omitempty"`
 	AskPrice           bool      `json:"AskPrice,omitempty"`
 	AllowZeroPrice     bool      `json:"AllowZeroPrice,omitempty"`
